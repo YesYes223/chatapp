@@ -4,9 +4,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SampleText</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    
+    <div class="container">
+        <div class="top-container">
+            <h1>SampleText</h1>
+        </div>
+        <div class="bottom-container">
+            <div>
+                <label for="username">Username</label>
+                <input type="text" placeholder="Username">
+            </div>
+            <div>
+                <label for="select-room">Room</label>
+                <select id="select-room">
+                    <option>Group1</option>
+                    <option>Group2</option>
+                    <option>Group3</option>
+                </select>
+            </div>
+            <div>
+                <input onclick="goToRoom(event)" class="join-room-btn" value="Join Room">
+            </div>
+        </div>
+    </div>
 </body>
 </html>
