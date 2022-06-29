@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const http = require("http")
 const server = http.createServer(app)
+const io = require("socket.io")(server)
 
 app.set("view engine", "ejs")
 app.use(express.static("public"))
@@ -16,6 +17,10 @@ app.get("/:room", (req, res) => {
     } else {
         res.redirect("/")
     }
+})
+
+io.on("connection", socket => {
+    console.log("User connected")
 })
 
 server.listen(8080)
