@@ -21,6 +21,12 @@ app.get("/:room", (req, res) => {
 
 io.on("connection", socket => {
     console.log("User connected")
+    socket.on("userJoin", data => {
+        const room = data.room
+        const username = data.username
+        socket.join(room)
+        socket.broadcast.to(room).emit("userJoin", {"username": username})
+    })
 })
 
 server.listen(8080)

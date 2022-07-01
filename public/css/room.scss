@@ -12,6 +12,10 @@ body {
     top: 0;
     left: 0;
     height: 2rem;
+    display: flex;
+    .room-name {
+        margin: 0;
+    }
 }
 .bottom-container {
     .users-container {
