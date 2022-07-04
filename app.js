@@ -3,6 +3,7 @@ const app = express()
 const http = require("http")
 const server = http.createServer(app)
 const io = require("socket.io")(server)
+const users = require("./utils/users")
 
 app.set("view engine", "ejs")
 app.use(express.static("public"))
@@ -20,11 +21,12 @@ app.get("/:room", (req, res) => {
 })
 
 io.on("connection", socket => {
-    console.log("User connected")
     socket.on("userJoin", data => {
         const room = data.room
         const username = data.username
         socket.join(room)
+        users.addUser(socket.id, username, room)  // add user to the 'users' array
+        socket.emit("usersConnected", users.users[room])  // send every user in the room to the client
         socket.broadcast.to(room).emit("userJoin", {"username": username})
     })
 })
