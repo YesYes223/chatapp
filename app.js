@@ -27,7 +27,13 @@ io.on("connection", socket => {
         socket.join(room)
         users.addUser(socket.id, username, room)  // add user to the 'users' array
         socket.emit("usersConnected", users.users[room])  // send every user in the room to the client
-        socket.broadcast.to(room).emit("userJoin", {"username": username})
+        socket.broadcast.to(room).emit("userJoin", {"username": username, "id": socket.id})
+    })
+    socket.on("disconnecting", () => {
+        const room = Array.from(socket.rooms)[1]
+        const user = users.users[room].find(user => user.id === socket.id)
+        users.users[room].splice(users.users[room].indexOf(user), 1)  // remove user from the 'users' array
+        socket.broadcast.to(room).emit("userDisconnect", {"username": user.username, "id": socket.id})
     })
 })
 
