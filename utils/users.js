@@ -9,4 +9,10 @@ function addUser(id, username, room) {
     users[room].push(user)
 }
 
-module.exports = {addUser, users}
+function removeUser(id, room) {
+    const user = users[room].find(user => user.id === id)
+    users[room].splice(users[room].indexOf(user), 1)
+    return user
+}
+
+module.exports = {addUser, removeUser, users}

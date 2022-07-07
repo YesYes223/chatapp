@@ -31,8 +31,7 @@ io.on("connection", socket => {
     })
     socket.on("disconnecting", () => {
         const room = Array.from(socket.rooms)[1]
-        const user = users.users[room].find(user => user.id === socket.id)
-        users.users[room].splice(users.users[room].indexOf(user), 1)  // remove user from the 'users' array
+        const user = users.removeUser(socket.id, room)  // remove the user from the 'users' array and return the user
         socket.broadcast.to(room).emit("userDisconnect", {"username": user.username, "id": socket.id})
     })
 })
