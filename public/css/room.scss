@@ -1,83 +1,107 @@
 body {
-    height: 100vh;
+    background-color: white;
     color: white;
+    min-height: calc(100vh - 3rem);
     margin: 0;
-    background-image: linear-gradient(to right, rgb(14, 14, 31), rgb(41, 41, 72));
-    display: flex;
-    flex-direction: column;
 }
 .top-container {
+    height: 3rem;
+    background-color: rgb(6, 6, 19);
     width: 100vw;
     position: fixed;
     top: 0;
     left: 0;
-    height: 2rem;
     display: flex;
-    .room-name {
-        margin: 0;
+    align-items: center;
+    justify-content: space-between;
+    div {
+        margin-left: 0.7rem;
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        i {
+            font-size: 1.5rem;
+        }
+        p {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+    }
+    a {
+        font-size: 0.8rem;
+        font-family: Arial, Helvetica, sans-serif;
+        text-decoration: none;
+        background-color: rgb(4, 71, 135);
+        color: white;
+        cursor: pointer;
+        margin-right: 0.7rem;
+        padding: 0.5rem;
     }
 }
 .bottom-container {
+    margin-top: 3rem;
     .users-container {
         display: none;
     }
     .right-container {
-        margin-top: 2rem;
-        flex: 2;
-        display: flex;
-        flex-direction: column;
-        width: 100vw;   
+
         .chat-container {
-            width: 100%;
-            flex: 2;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
+            background-color: white;
+            display: block;
+            div {
+                color: black;
+            }
         }
         .message-container {
+            width: 100%;
             position: fixed;
             bottom: 0;
             left: 0;
             display: flex;
-            align-items: center;
-            width: 100%;
             div {
-                height: 2rem;
-                background-color: rgb(75, 75, 134);
+                background-color: rgb(4, 71, 135);
                 display: flex;
                 align-items: center;
-                padding: 0 0.5rem 0 0.5rem;
-                gap: 0.2rem;
+                gap: 0.5rem;
+                padding: 0.5rem;
                 p {
                     margin: 0;
                 }
             }
             textarea {
-                flex: 2;
-                height: 2rem;
-                resize: none;
-                border: none;
-                padding: 0;
+                border: 1px solid gray;
                 outline: none;
+                resize: none;
+                flex: 2;
             }
         }
     }
 }
-
 @media screen and (min-width: 700px) {
     .bottom-container {
+        display: flex;
+        margin-left: 20%;
         .users-container {
-            height: 100vh;
-            margin-top: 2rem;
-            position: fixed;
-            top: 0;
-            left: 0;
+            min-height: calc(100vh - 3rem);
+            background-color: rgb(3, 3, 11);
+            width: 20%;
             display: block;
-            width: 25%;
+            position: fixed;
+            left: 0;
+            .room-name {
+                margin-left: auto;
+                margin-right: auto;
+                width: 50%;
+                background-color: rgb(4, 71, 135);
+                text-align: center;
+                padding: 0.3rem 1rem 0.3rem 1rem;
+            }
         }
         .right-container {
-            width: 75%;
-            margin-left: 25%;
+            .message-container {
+                width: 80%;
+                left: auto;
+            }
         }
     }
 }
