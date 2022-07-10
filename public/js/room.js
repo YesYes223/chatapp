@@ -6,6 +6,7 @@ const url = new URL(window.location.href)
 const username = url.searchParams.get("username")
 const messageButton = document.querySelector(".message-button")
 const chatContainer = document.querySelector(".chat-container")
+const messageTextarea = document.querySelector(".message-textarea")
 
 function addUsernameToContainer(username, id) {
     const tag = document.createElement("p")
@@ -33,11 +34,35 @@ socket.on("userDisconnect", user => {
 })
 
 socket.on("userMessage", data => {
-    console.log(data)
+    const div = document.createElement("div")
+    div.classList.add("message-container")
+    div.innerHTML = `
+        <div class="info-container">
+            <p class="username">${data.username}</p>
+            <p class="time-sent">2:47pm</p>
+        </div>
+        <p>${data.message}</p>
+    `
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) { // check if user is at the bottom of the page
+        chatContainer.appendChild(div)
+        window.scrollTo(0, document.body.scrollHeight);
+    } else {
+        chatContainer.appendChild(div)
+    }
 })
 
 messageButton.addEventListener("click", () => {
-    const messageTextarea = document.querySelector(".message-textarea")
     socket.emit("userMessage", {"username": username, "message": messageTextarea.value, "room": room})
+    const div = document.createElement("div")
+    div.classList.add("message-container")
+    div.innerHTML = `
+        <div class="info-container">
+            <p class="username">${username}</p>
+            <p class="time-sent">2:47pm</p>
+        </div>
+        <p>${messageTextarea.value}</p>
+    `
+    chatContainer.appendChild(div)
+    window.scrollTo(0, document.body.scrollHeight);
     messageTextarea.value = ""
 })
