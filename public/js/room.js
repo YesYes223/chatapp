@@ -84,18 +84,20 @@ socket.on("userMessage", data => {
 })
 
 messageButton.addEventListener("click", () => {
-    socket.emit("userMessage", {"username": username, "message": messageTextarea.value, "room": room})
-    const div = document.createElement("div")
-    div.classList.add("message-container")
-    div.innerHTML = `
-        <div class="info-container">
-            <p class="username">${username}</p>
-            <p class="time-sent">2:47pm</p>
-        </div>
-        <p>${messageTextarea.value}</p>
-    `
-    chatContainer.appendChild(div)
-    window.scrollTo(0, document.body.scrollHeight);
+    if (messageTextarea.value.trim()) {
+        socket.emit("userMessage", {"username": username, "message": messageTextarea.value, "room": room})
+        const div = document.createElement("div")
+        div.classList.add("message-container")
+        div.innerHTML = `
+            <div class="info-container">
+                <p class="username">${username}</p>
+                <p class="time-sent">2:47pm</p>
+            </div>
+            <p>${messageTextarea.value}</p>
+        `
+        chatContainer.appendChild(div)
+        window.scrollTo(0, document.body.scrollHeight);
+    }
     messageTextarea.value = ""
 })
 
