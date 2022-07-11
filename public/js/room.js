@@ -47,6 +47,22 @@ socket.on("userJoin", user => {
 socket.on("userDisconnect", user => {
     const userElement = document.getElementById(user.id)
     usersContainer.removeChild(userElement)
+    const div = document.createElement("div")
+    div.classList.add("message-container")
+    div.classList.add("user-left-container")
+    div.innerHTML = `
+        <div class="info-container">
+            <p class="username">Server</p>
+            <p class="time-sent">2:47pm</p>
+        </div>
+        <p>${user.username} left the room.</p>
+    `
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) { // check if user is at the bottom of the page
+        chatContainer.appendChild(div)
+        window.scrollTo(0, document.body.scrollHeight);
+    } else {
+        chatContainer.appendChild(div)
+    }
 })
 
 socket.on("userMessage", data => {
