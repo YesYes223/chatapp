@@ -98,3 +98,10 @@ messageButton.addEventListener("click", () => {
     window.scrollTo(0, document.body.scrollHeight);
     messageTextarea.value = ""
 })
+
+messageTextarea.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        messageButton.click()
+    }
+})
