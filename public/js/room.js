@@ -26,6 +26,22 @@ socket.on("usersConnected", users => {
 
 socket.on("userJoin", user => {
     addUsernameToContainer(user.username, user.id)
+    const div = document.createElement("div")
+    div.classList.add("message-container")
+    div.classList.add("user-joined-container")
+    div.innerHTML = `
+        <div class="info-container">
+            <p class="username">Server</p>
+            <p class="time-sent">2:47pm</p>
+        </div>
+        <p>${user.username} joined the room.</p>
+    `
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) { // check if user is at the bottom of the page
+        chatContainer.appendChild(div)
+        window.scrollTo(0, document.body.scrollHeight);
+    } else {
+        chatContainer.appendChild(div)
+    }
 })
 
 socket.on("userDisconnect", user => {
