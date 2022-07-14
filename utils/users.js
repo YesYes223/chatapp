@@ -1,18 +1,19 @@
-let users = {
-    "Group1": [],
-    "Group2": [],
-    "Group3": [],
-}
+let users = []
 
 function addUser(id, username, room) {
-    const user = {id, username}
-    users[room].push(user)
+    const user = {id, username, room}
+    users.push(user)
 }
 
-function removeUser(id, room) {
-    const user = users[room].find(user => user.id === id)
-    users[room].splice(users[room].indexOf(user), 1)
+function removeUser(id) {
+    const user = users.find(user => user.id === id)
+    users.splice(users.indexOf(user), 1)
     return user
 }
 
-module.exports = {addUser, removeUser, users}
+function getAllUsers(room) {
+    const allUsers = users.filter(user => user.room === room)
+    return allUsers
+}
+
+module.exports = {addUser, removeUser, getAllUsers, users}

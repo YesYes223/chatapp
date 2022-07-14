@@ -26,16 +26,17 @@ io.on("connection", socket => {
         const username = data.username
         socket.join(room)
         users.addUser(socket.id, username, room)  // add user to the 'users' array
-        socket.emit("usersConnected", users.users[room])  // send every user in the room to the client
+        socket.emit("usersConnected", users.getAllUsers(room))  // send every user in the room to the client
         socket.broadcast.to(room).emit("userJoin", {"username": username, "id": socket.id})
     })
     socket.on("userMessage", data => {
         socket.broadcast.to(data.room).emit("userMessage", {"message": data.message, "username": data.username})
     })
-    socket.on("disconnecting", () => {
-        const room = Array.from(socket.rooms)[1]
-        const user = users.removeUser(socket.id, room)  // remove the user from the 'users' array and return the user
-        socket.broadcast.to(room).emit("userDisconnect", {"username": user.username, "id": socket.id})
+    socket.on("disconnect", () => {
+        const user = users.removeUser(socket.id)  // remove the user from the 'users' array and return the user
+        if (user) {
+            socket.broadcast.to(user.room).emit("userDisconnect", {"username": user.username, "id": socket.id})
+        }
     })
 })
 
