@@ -16,6 +16,12 @@ function addUsernameToContainer(username, id) {
     usersContainer.appendChild(tag)
 }
 
+function getCurrentTime() {
+    const date = new Date()
+    const time = `${date.getHours()}:${date.getMinutes()}`
+    return time
+}
+
 socket.emit("userJoin", {"room": room, "username": username})
 
 socket.on("usersConnected", users => {
@@ -26,13 +32,14 @@ socket.on("usersConnected", users => {
 
 socket.on("userJoin", user => {
     addUsernameToContainer(user.username, user.id)
+    const time = getCurrentTime()
     const div = document.createElement("div")
     div.classList.add("message-container")
     div.classList.add("user-joined-container")
     div.innerHTML = `
         <div class="info-container">
             <p class="username">Server</p>
-            <p class="time-sent">2:47pm</p>
+            <p class="time-sent">${time}</p>
         </div>
         <p>${user.username} joined the room.</p>
     `
@@ -47,13 +54,14 @@ socket.on("userJoin", user => {
 socket.on("userDisconnect", user => {
     const userElement = document.getElementById(user.id)
     usersContainer.removeChild(userElement)
+    const time = getCurrentTime()
     const div = document.createElement("div")
     div.classList.add("message-container")
     div.classList.add("user-left-container")
     div.innerHTML = `
         <div class="info-container">
             <p class="username">Server</p>
-            <p class="time-sent">2:47pm</p>
+            <p class="time-sent">${time}</p>
         </div>
         <p>${user.username} left the room.</p>
     `
@@ -66,12 +74,13 @@ socket.on("userDisconnect", user => {
 })
 
 socket.on("userMessage", data => {
+    const time = getCurrentTime()
     const div = document.createElement("div")
     div.classList.add("message-container")
     div.innerHTML = `
         <div class="info-container">
             <p class="username">${data.username}</p>
-            <p class="time-sent">2:47pm</p>
+            <p class="time-sent">${time}</p>
         </div>
         <p>${data.message}</p>
     `
@@ -86,12 +95,13 @@ socket.on("userMessage", data => {
 messageButton.addEventListener("click", () => {
     if (messageTextarea.value.trim()) {
         socket.emit("userMessage", {"username": username, "message": messageTextarea.value, "room": room})
+        const time = getCurrentTime()
         const div = document.createElement("div")
         div.classList.add("message-container")
         div.innerHTML = `
             <div class="info-container">
                 <p class="username">${username}</p>
-                <p class="time-sent">2:47pm</p>
+                <p class="time-sent">${time}</p>
             </div>
             <p>${messageTextarea.value}</p>
         `
