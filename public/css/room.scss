@@ -119,19 +119,23 @@ body {
         display: flex;
         margin-left: 20%;
         .users-container {
-            min-height: calc(100vh - 3rem);
+            padding: 1rem;
+            height: calc(100vh - 4rem);
+            overflow-y: auto;
             background-color: rgb(3, 3, 11);
-            width: 20%;
+            width: calc(20% - 2rem);
             display: block;
             position: fixed;
             left: 0;
             .room-name {
-                margin-left: auto;
-                margin-right: auto;
-                width: 50%;
+                margin: 0;
+                width: calc(100% - 2rem);
                 background-color: rgb(4, 71, 135);
                 text-align: center;
                 padding: 0.3rem 1rem 0.3rem 1rem;
+            }
+            p {
+                word-break: break-all;
             }
         }
         .right-container {
